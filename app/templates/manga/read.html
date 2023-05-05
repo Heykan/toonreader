@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ manga.name }}{% endblock %}
+
+{% block content %}
+{% set manga_name = manga.name.lower().replace(' ', '-') %}
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a href="{{url_for('views.home')}}"><i class="fa fa-home"></i> Acceuil</a>
+                    <a href="{{ url_for('views.category', name=manga.gender[0].name.lower().replace(' ', '-')) }}">{{ manga.gender[0].name }}</a>
+                    <a href="{{ url_for('views.detail', manga_name=manga_name) }}">{{ manga.name }}</a>
+                    <span>{{ chapter.title }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Anime Section Begin -->
+<section class="anime-details spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h5>Choix du chapitre</h5>
+                </div>
+                <div class="manga__buttons">
+                    <div class="left">
+                        <a id="chapter-drop">{{chapter.title}} <span class="arrow_carrot-down"></span></a>
+                        <ul id="chapter-list" class="dropdown">
+                            {% for chapter in manga.chapters %}
+                            <a href="{{url_for('views.read_chapter', manga_name=manga_name, chapter_title=chapter.title.lower().replace(' ', '-'))}}"><li>{{chapter.title}}</li></a>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="right">
+                        {% if chapter.number != 1 %}
+                        <a href="{{url_for('views.read_chapter', manga_name=manga_name, chapter_title='chapitre-' + string(chapter.number - 1))}}"><span class="fa fa-arrow-left"></span> Précédent</a>
+                        {% else %}
+                        <a href="{{ url_for('views.detail', manga_name=manga_name) }}" class="primary-btn">Retour à la page info</a>
+                        {% endif %}
+                        {% if chapter.number != manga.last_chapter %}
+                        <a href="{{url_for('views.read_chapter', manga_name=manga_name, chapter_title='chapitre-' + string(chapter.number + 1))}}">Suivant <span class="fa fa-arrow-right"></span></a>
+                        {% else %}
+                        <a href="{{ url_for('views.detail', manga_name=manga_name) }}" class="primary-btn">Retour à la page info</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="chapter__content">
+                    {% for file in natsorted(files) %}
+                    {% if file.endswith(".jpg") or file.endswith(".png") %}
+                    <img src="{{ url_for('static', filename='uploads/mangas/' + manga.name + '/' + chapter.title + '/' + file) }}" alt="image chapitre {{ file }}">
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="manga__buttons">
+                    <div class="left">
+                        <a id="chapter-drop2">Chapitres <span class="arrow_carrot-down"></span></a>
+                        <ul id="chapter-list2" class="dropdown">
+                            {% for chapter in manga.chapters %}
+                            <a href="{{url_for('views.read_chapter', manga_name=manga_name, chapter_title=chapter.title.lower().replace(' ', '-'))}}"><li>{{chapter.title}}</li></a>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="right">
+                        {% if chapter.number != 1 %}
+                        <a href="{{url_for('views.read_chapter', manga_name=manga_name, chapter_title='chapitre-' + string(chapter.number - 1))}}"><span class="fa fa-arrow-left"></span> Précédent</a>
+                        {% else %}
+                        <a href="{{ url_for('views.detail', manga_name=manga_name) }}" class="primary-btn">Retour à la page info</a>
+                        {% endif %}
+                        {% if chapter.number != manga.last_chapter %}
+                        <a href="{{url_for('views.read_chapter', manga_name=manga_name, chapter_title='chapitre-' + string(chapter.number + 1))}}">Suivant <span class="fa fa-arrow-right"></span></a>
+                        {% else %}
+                        <a href="{{ url_for('views.detail', manga_name=manga_name) }}" class="primary-btn">Retour à la page info</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="anime__details__review">
+                    <div class="section-title">
+                        <h5>Commentaires</h5>
+                    </div>
+                    {% if comments|length > 0 %}
+                    {% for comment in comments %}
+                    <div class="anime__review__item">
+                        <div class="anime__review__item__pic">
+                            {% if comment.user.avatar != "" %}
+                            <img src="{{url_for('static', filename='uploads/users/' + string(comment.user.id) + '/' + comment.user.avatar)}}" alt="avatar utilisateur">
+                            {% endif %}
+                        </div>
+                        <div class="anime__review__item__text">
+                            <h6>{{comment.user.username}} - <span>{{comment.date_text}}</span></h6>
+                            <p>{{comment.comment}}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <h6 class="is-italic is-white">Aucun commentaire</h6>
+                    {% endif %}
+                </div>
+                <div class="anime__details__form">
+                    <div class="section-title">
+                        <h5>Laisse un commentaire</h5>
+                    </div>
+
+                    {% if user %}
+                    <form action="{{url_for('views.read_chapter', user=user, manga_name=manga_name, chapter_title=chapter.title.lower().replace(' ', '-'))}}" method="POST">
+                        <textarea name="comment" id="comment" placeholder="Ton commentaire"></textarea>
+                        <button type="submit"><i class="fa fa-location-arrow"></i> Review</button>
+                    </form>
+                    {% else %}
+                    <div class="manga__comment__connection">
+                        <h6 class="is-white is-italic">Tu dois être connecter pour pouvoir laisser un commentaire</h6> <a href="{{ url_for('views.login') }}" class="primary-btn">Se connecter</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Anime Section End -->
+<script src="{{url_for('static', filename='js/chapter.dropdown.js')}}"></script>
+<script>
+    // Obtenez l'identifiant de l'ancrage à partir de l'URL actuelle
+    var ancre = window.location.hash;
+
+    // Si l'URL contient un ancrage, faites défiler la page vers cet ancrage
+    if (ancre) {
+        var cible = document.querySelector(ancre);
+        if (cible) {
+            window.scrollTo(0, cible.offsetTop);
+        }
+    }
+</script>
+{% endblock %}

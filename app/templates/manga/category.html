@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Mangas{% endblock %}
+{% block style %}{% endblock %}
+
+{% block manga_active %}active{% endblock %}
+
+{% block content %}
+
+<section class="product spad">
+    <div class="container">
+        <div class="trending__product">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-8">
+                    <div class="section-title">
+                        <h4>{{gender.name}}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% for manga in mangas %}
+                {% set cover_path = 'uploads/mangas/' + manga.name + '/' + manga.cover %}
+                {% set manga_name = manga.name.lower().replace(' ', '-') %}
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="product__item">
+                        <a href="{{ url_for('views.detail', manga_name=manga_name) }}">
+                            <div class="product__item__pic set-bg" data-setbg="{{ url_for('static', filename=cover_path) }}">
+                                {% if manga.chapters|length > 0 %}<div class="ep">{{ manga.chapters|length }}</div>{% endif %}
+                                <div class="comment"><i class="fa fa-comments"></i> {{ manga.comments|length }}</div>
+                                <div class="view"><i class="fa fa-eye"></i> {{ manga.views }}</div>
+                            </div>
+                        </a>
+                        <div class="product__item__text">
+                            <ul>
+                                <li>{{ manga.status }}</li>
+                                <li>{{ manga.type }}</li>
+                            </ul>
+                            <h5><a href="{{ url_for('views.detail', manga_name=manga_name) }}">{{manga.name}}</a></h5>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% if mangas|length == 0 %}
+                <div class="col-lg-4 col-md-6 col-sm-6" style="height: 45vh">
+                    <div class="nothing">
+                        <div class="left">
+                            <p class="is-white is-italic">Il semble qu'il n'y ai rien ici...</p>
+                        </div>
+                        <div class="right tumbleweed-container">
+                            <img src="{{url_for('static', filename='img/tumbleweed.png')}}" alt="tumbleweed">
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

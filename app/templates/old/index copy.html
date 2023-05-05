@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Acceuil{% endblock %}
+{% block style %}<link rel="stylesheet" href="{{ url_for('static', filename='css/manga_slider.css') }}">{% endblock %}
+
+{% block content %}
+  <section id="banner" class="section is-medium" style="
+  background-image: url('{{ url_for('static', filename='img/banner.jpg') }}');
+  background-size: cover;
+  background-position: center;">
+    <div class="container is-medium has-text-centered">
+      <h2 class="has-text-white">Bienvenue sur ToonReader !</h2>
+      <p class="has-text-white">Nous sommes un groupe de fans passionnés qui traduisent des mangas en français pour que vous puissiez les lire gratuitement.</p>
+      <a href="/manga" class="button is-warning">Découvrez nos mangas</a>
+    </div>
+  </section>
+  <section id="section featured-mangas" class="section is-dark">
+    <div class="container is-dark">
+      <h2>Mangas en vedette</h2>
+      <div class="slider-container">
+        <div class="slider-track">
+          {% for manga in best_toons %}
+            {% set banner_path = 'app/static/uploads/mangas/' + manga.name + '/' + manga.banner %}
+            {% set cover_path = 'app/static/uploads/mangas/' + manga.name + '/' + manga.cover %}
+  
+            {% if file_exists(banner_path) %}
+                <div class="slider-slide" style="background-image: url('{{ url_for('static', filename=banner_path.replace('app/static/', '')) }}'); background-size: cover;">
+            {% else %}
+                <div class="slider-slide" style="background-image: url('https://via.placeholder.com/1200x300.png?text={{ manga.name }}'); background-size: cover;">
+            {% endif %}
+  
+            {% if file_exists(cover_path) %}
+                <img src="{{ url_for('static', filename=cover_path.replace('app/static/', '')) }}">
+            {% else %}
+                <img src="https://via.placeholder.com/300x300.png?text={{ manga.name }}">
+            {% endif %}
+  
+            <div class="slider-slide-content">
+                <h3><a href="/manga/{{ manga.name.lower().replace(' ', '-') }}" class="has-text-white">{{ manga.name }}</a></h3>
+                <p>{{ manga.short_description(85) }}</p>
+            </div>
+            
+            </div>
+          {% endfor %}
+        </div>
+        <a class="slider-prev">&lt;</a>
+        <a class="slider-next">&gt;</a>
+      </div>
+    </div>
+  </section>
+  <script src="{{ url_for('static', filename='js/slider.js') }}"></script>
+{% endblock %}

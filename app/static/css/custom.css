@@ -1,0 +1,281 @@
+* {
+  list-style: none;
+}
+
+.bordered-text {
+    color: white;
+    text-shadow:
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+}
+
+.max-1172
+{
+  max-width: 1172px;
+  max-height: 564px;
+}
+
+.is-1172
+{
+  width: 1172px;
+  height: 564px;
+}
+
+.is-italic {
+  font-style: italic;
+}
+
+.is-white {
+  color: #fff;
+}
+
+.is-red {
+  color: #E53637;
+}
+
+.visible {
+  visibility: hidden;
+}
+
+header .avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.manga__chapter {
+  margin-bottom: 35px;
+  color: #fff;
+  max-height: 750px;
+  overflow-y: scroll;
+}
+
+.manga__chapter__item__pic
+{
+  display: flex;
+  align-items: center;
+  background: #1d1e39;
+}
+
+.manga__chapter__item__pic h6
+{
+  color: #fff;
+  margin-left: 20px;
+  font-weight: bold;
+}
+
+.manga__chapter__item__pic img
+{
+  max-width: 80px;
+}
+
+.chapter__content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.chapter__content img{
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+}
+
+.manga__buttons {
+  margin-bottom: 35px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.dropdown {
+  transition: none;
+}
+
+.manga__buttons ul a {
+  padding: 0;
+  margin: 0;
+  background: rgba(0, 0, 0, 0);
+  transition: all ease-in 0.1s
+}
+
+.manga__buttons ul a:hover {
+  padding: 0;
+  background: rgba(0, 0, 0, 0);
+	color: #000000;
+}
+
+.manga__buttons ul li {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.7);
+  height: 30px;
+  width: 125px;
+  padding-left: 10px;
+  padding-top: 2px;
+}
+
+.manga__buttons .dropdown {
+	background: #3C3D55;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  max-width: 125px;
+  visibility: hidden;
+  position: absolute;
+  max-height: 180px;
+  overflow-y: scroll;
+  z-index: 9999;
+}
+
+.manga__buttons a 
+{
+	display: inline-block;
+	font-size: 15px;
+	color: #ffffff;
+	background: rgba(255, 255, 255, 0.2);
+	padding: 10px 20px;
+	border-radius: 4px;
+	margin-right: 15px;
+	margin-bottom: 1px;/*
+	-webkit-transition: all, 0.3s;
+	-o-transition: all, 0.3s;
+	transition: all, 0.3s;*/
+  position: relative;
+  cursor: pointer;
+}
+
+.manga__buttons a:hover {
+	color: #000000;
+	background: #ffffff;
+}
+
+.manga__comment__connection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.manga__comment__connection h6 {
+  margin-right: 10px;
+}
+
+.manga__comment__connection .primary-btn, .lost .primary-btn {
+	background: #e53637;
+	padding: 12px 42px;
+}
+
+.lost img {
+  max-height: 60vh;
+}
+
+.lost .data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+}
+
+.lost .data h1 {
+  font-size: 9em;
+}
+
+.lost .data p {
+  font-size: 1.6em;
+}
+
+.nothing {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tumbleweed-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 20px auto;
+}
+
+.tumbleweed-container img {
+  position: absolute;
+  bottom: 0;
+  animation: tumbleweed 3s ease-in-out infinite;
+}
+
+@keyframes tumbleweed {
+  0% {
+    transform: rotate(0deg);
+    bottom: 0;
+  }
+  50% {
+    transform: rotate(360deg);
+    bottom: 50px;
+  }
+  100% {
+    transform: rotate(720deg);
+    bottom: 0;
+  }
+}
+
+.breadcrumb__links a.no__arrow:after {
+  content: none;
+}
+
+.limited__dropdown {
+  max-height: 450px;
+  overflow-y: scroll;
+}
+
+.header__menu ul li .dropdown li a {
+  transition: ease-in-out 0.1s;
+}
+
+.dropdown {
+  transition: ease-in-out 0.1s;
+}
+
+.header__menu ul li .dropdown li a:hover{
+  color: #E53637;
+  font-weight: bold;
+}
+
+.tab__header ul li{
+  padding: 15px 5px;
+  background-color: #3C3D55;
+}
+
+.tab__header ul li:hover, .tab__header ul .active{
+  background-color: #E53637;
+}
+
+@media screen and (max-width: 768px) {
+  .manga__comment__connection {
+    flex-direction: column;
+  }
+  
+  .manga__comment__connection h6 {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .lost .col-lg-4 {
+    visibility: collapse;
+  }
+
+  .lost .row {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .limited__dropdown {
+    max-height: 100%;
+    overflow-y: scroll;
+  }
+}

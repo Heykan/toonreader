@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Configuration{% endblock %}
+
+{% block content %}
+    <!-- Settings Section Begin -->
+    <section class="setting spad">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-3">
+                    <div class="tab__header">
+                        <ul>
+                            <a href="{{url_for('views.setting', tab='bookmark')}}" class="is-white"><li class="active"><span class="fa fa-bookmark"></span> Favoris</li></a>
+                            <a href="{{url_for('views.setting', tab='account')}}" class="is-white"><li><span class="fa fa-user"></span> Paramètre du compte</li></a>
+                            {% if user and user.mod > 0 %}
+                            <a href="{{url_for('views.setting', tab='admin')}}" class="is-white"><li><span class="fa fa-cog"></span> Administration</li></a>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <p>ok</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Settings Section End -->
+{% endblock %}

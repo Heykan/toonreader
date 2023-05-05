@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>{{ site_name }} - {% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bulma/bulma.css') }}">
+    {% block style %}{% endblock %}
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
+
+    <meta name="description" content="Un site pour lire vos mangas gratuitement">
+    <meta property="og:title" content="{{ site_name }}">
+    <meta property="og:description" content="Un site pour lire vos mangas gratuitement">
+    <meta property="og:image" content="{{ url_for('static', filename='img/logo.png')}}">
+    <meta property="og:url" content="http://toonreader-dev.dynv6.net">
+    <meta property="og:type" content="website">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  </head>
+  <body class="is-dark">
+    <header>
+      <a href="/">
+        <h1>{{ site_name }}</h1>
+      </a>
+      <button class="burger-menu-btn">
+        <span class="burger-menu-icon"></span>
+      </button>
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="/">Accueil</a></li>
+          <li><a href="/manga">Manga</a></li>
+          {% if user %}
+            <li><a id="login-btn" class="pointer">{{ user.username }}</a></li>
+            <div id="login-menu" style="display:none; position:absolute; transform: translateY(30px);">
+              <form>
+                <a href="/bookmarks">Favoris</a>
+                <a href="/settings">Paramètres</a>
+                {% if user.mod == 1 %}
+                  <a href="/admin">Administration</a>
+                {% endif %}
+                <a href="/logout">Se déconnecter</a>
+              </form>
+            </div>
+          {% else %}
+            <li><a id="login-btn" class="pointer">Se connecter</a></li>
+            <div id="login-menu" style="display:none; position:absolute; transform: translateY(30px);">
+              <form method="POST" action="/login">
+                <label for="username">Nom d'utilisateur :</label>
+                <input type="text" id="username" name="username">
+                <label for="password">Mot de passe :</label>
+                <input type="password" id="password" name="password">
+                <input type="submit" value="Se connecter">
+                <a href="/register">S'enregistrer</a>
+                <a href="/password">Mot de passe oublié</a>
+              </form>
+            </div>
+          {% endif %}
+        </ul>
+      </nav>
+    </header>
+    <main>
+      {% block content %}{% endblock %}
+      <script src="{{ url_for('static', filename='js/connect.js') }}"></script>
+    </main>
+    <footer>
+      <p>Tous droits réservés - ToonReader © 2023</p>
+    </footer>
+  </body>
+</html>

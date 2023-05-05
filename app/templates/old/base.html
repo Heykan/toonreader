@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="fr" class="has-background-dark is-dark has-text-dark">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>{{ site_name }} - {% block title %}{% endblock %}</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    {% block style %}{% endblock %}
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/logo.png') }}" type="image/x-icon">
+
+    <meta name="description" content="Un site pour lire vos mangas gratuitement">
+    <meta property="og:title" content="{{ site_name }}">
+    <meta property="og:description" content="Un site pour lire vos mangas gratuitement">
+    <meta property="og:image" content="{{ url_for('static', filename='img/logo.png')}}">
+    <meta property="og:url" content="http://toonreader-dev.dynv6.net">
+    <meta property="og:type" content="website">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  </head>
+  <body class="has-background-dark">
+    <section class="hero is-dark">
+      <div class="hero-head">
+        <nav class="navbar">
+          <div class="container">
+            <div class="navbar-brand">
+              <a class="navbar-item" href="/">
+                <h1 class="title is-1 has-text-white">{{ site_name }}</h1>
+              </a>
+              <button class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="nav-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+              </button>
+            </div>
+            <div id="nav-menu" class="navbar-menu">
+              <div class="navbar-start">
+                <a class="navbar-item" href="/">
+                  Accueil
+                </a>
+                <a class="navbar-item" href="/manga">
+                  Manga
+                </a>
+              </div>
+              <div class="navbar-end">
+                <div class="navbar-item has-dropdown is-hoverable has-background-dark">
+                  {% if user %}
+                  <a class="navbar-link">{{ user.username }}</a>
+                  <div class="navbar-dropdown is-right has-background-dark">
+                    <a href="/bookmarks" class="navbar-item has-text-white">Favoris</a>
+                    <a href="/settings" class="navbar-item has-text-white">Paramètres</a>
+                    {% if user.mod == 1 %}
+                    <a href="/admin" class="navbar-item has-text-white">Administration</a>
+                    {% endif %}
+                    <a href="/logout" class="navbar-item has-text-white">Se déconnecter</a>
+                  </div>
+                  {% else %}
+                  <a class="navbar-link has-text-white">Se connecter</a>
+                  <div class="navbar-dropdown is-right has-background-dark">
+                    <form method="POST" action="/login" class="px-4 py-3 has-background-dark">
+                      <div class="field">
+                        <label class="label has-text-white" for="username">Nom d'utilisateur</label>
+                        <div class="control has-icons-left">
+                          <input class="input has-background-dark has-text-white" type="text" id="username" name="username" required>
+                          <span class="icon is-small is-left">
+                            <i class="fas fa-user"></i>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="field">
+                        <label class="label has-text-white" for="password">Mot de passe</label>
+                        <div class="control has-icons-left">
+                          <input class="input has-background-dark has-text-white" type="password" id="password" name="password" required>
+                          <span class="icon is-small is-left">
+                            <i class="fas fa-lock"></i>
+                          </span>
+                        </div>
+                      </div>
+                      <button type="submit" class="button is-primary has-text-white">Se connecter</button>
+                      <a href="/register" class="navbar-item has-text-white">S'enregistrer</a>
+                      <a href="/password" class="navbar-item has-text-white">Mot de passe oublié</a>
+                    </form>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <div class="hero-body">
+        <div class="container">
+          {% block content %}{% endblock %}
+        </div>
+      </div>
+      <div class="hero-foot has-text-centered has-background-black-bis">
+        <section class="section is-small">
+          <p>Tous droits réservés - ToonReader © 2023</p>
+        </section>
+      </div>
+    </section>
+    <script src="{{ url_for('static', filename='js/connect.js') }}"></script>
+    <script src="https://kit.fontawesome.com/8c96fd0092.js" crossorigin="anonymous"></script>
+  </body>
+</html>

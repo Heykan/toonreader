@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Ajouter un manga{% endblock %}
+
+{% block content %}
+    <h1>Ajouter un manga</h1>
+    <form action="{{ url_for('views.add_manga') }}" method="POST" enctype="multipart/form-data">
+        <label for="name">Nom :</label>
+        <input type="text" name="name" required><br><br>
+        <label for="cover">Couverture :</label>
+        <input type="file" name="cover" accept=".jpg,.jpeg,.png,.gif"><br><br>
+        <label for="banner">Bannière :</label>
+        <input type="file" name="banner" accept=".jpg,.jpeg,.png,.gif"><br><br>
+        <label for="description">Description :</label>
+        <textarea name="description" rows="10" cols="66"></textarea><br><br>
+        <input type="submit" value="Ajouter">
+        {% if error_message %}
+            {% if 'succès' in error_message %}
+                <span style="color: green;">{{ error_message }}</span>
+            {% else %}
+                <span style="color: red;">{{ error_message }}</span>
+            {% endif %}
+        {% endif %}
+    </form>
+{% endblock %}

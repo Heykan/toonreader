@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Page non trouvée{% endblock %}
+
+{% block content %}
+<section class="lost spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <img src="{{url_for('static', filename='img/lost.png')}}" alt="image d'un personnage de solo leveling">
+            </div>
+            <div class="col-lg-6">
+                <div class="data">
+                    <h1 class="is-white">404</h1>
+                    <p class="is-white">Vous vous êtes perdu, mais ce n'est pas grave. Cliquez sur le bouton ci-dessous pour revenir à l'acceuil.</p>
+                    <a class="primary-btn" href="{{url_for('views.home')}}">Retourner à l'acceuil</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

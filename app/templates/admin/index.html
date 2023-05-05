@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin{% endblock %}
+
+{% block content %}
+    <section>
+        <h1>Administration</h1>
+        <div id="manga-management">
+            <h2>Mangas</h2>
+            <a href="/add-manga">Ajouter un manga</a>
+            <a href="/edit-manga">Gérer les mangas</a>
+        </div>
+        <div id="user-management">
+            <h2>Utilisateurs</h2>
+            <a href="/set-users">Gérer les utilisateurs</a>
+        </div>
+    </section>
+{% endblock %}

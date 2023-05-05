@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des mangas{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <div class="container">
+            <h1 class="title">Liste des mangas</h1>
+            {% if success %}
+                <span style="color: green;">Chapitre ajouté avec succès.</span>
+            {% endif %}
+            {% if error %}
+                <span style="color: red;">{{ error }}</span>
+            {% endif %}
+            <div class="table-container">
+                <table class="table is-striped is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th>Titre</th>
+                            <th>Editeur</th>
+                            <th>Date de sortie</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for manga in mangas %}
+                            <tr>
+                                <td>{{ manga.name }}</td>
+                                <td>{{ manga.publisher }}</td>
+                                <td>{{ manga.release_date }}</td>
+                                <td>
+                                    <a class="button is-small" href="{{ url_for('views.edit_manga', manga_id=manga.id) }}">Editer</a>
+                                    <button class="button is-small is-primary" onclick="showChapterLinkForm({{ manga.id }})">Ajouter un chapitre</button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="chapterLinkFormModal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="box">
+                <form action="{{ url_for('views.edit_manga') }}" method="POST">
+                    <input type="hidden" name="manga_id" id="chapterLinkFormMangaId" value="">
+                    <div class="field">
+                        <label class="label">Numéro du chapitre</label>
+                        <div class="control">
+                            <input class="input" type="number" value="1" name="chapter_number" placeholder="Numéro du chapitre" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">Lien vers le chapitre</label>
+                        <div class="control">
+                            <input class="input" type="url" name="chapter_link" placeholder="Lien vers le chapitre" required>
+                        </div>
+                    </div>
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button class="button is-link" type="submit">Enregistrer</button>
+                        </div>
+                        <div class="control">
+                            <button class="button is-link is-light" type="button" onclick="hideChapterLinkForm()">Annuler</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close" onclick="hideChapterLinkForm()"></button>
+    </div>
+
+    <script>
+        function showChapterLinkForm(mangaId) {
+            document.getElementById('chapterLinkFormMangaId').value = mangaId;
+            document.getElementById('chapterLinkFormModal').classList.add('is-active');
+        }
+
+        function hideChapterLinkForm() {
+            document.getElementById('chapterLinkFormModal').classList.remove('is-active');
+        }
+    </script>
+{% endblock %}
